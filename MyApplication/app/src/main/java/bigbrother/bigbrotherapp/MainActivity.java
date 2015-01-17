@@ -71,28 +71,4 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    private class Relax extends AsyncTask<HttpPost, String, String> {
-        protected String doInBackground(HttpPost... obj) {
-            HttpClient client = new DefaultHttpClient();
-
-            // send request
-            try {
-                HttpResponse response = client.execute(obj[0]);
-                if (response.getStatusLine().getStatusCode() == 200) {
-
-                    return ":)";
-                } else {
-                    return ":(";
-                }
-            } catch (IOException e) {
-            }
-
-            return ":(";
-        }
-
-        protected void onPostExecute() {
-
-        }
-    }
 }
