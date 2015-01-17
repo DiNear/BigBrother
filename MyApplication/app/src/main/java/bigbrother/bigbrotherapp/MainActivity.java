@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -24,6 +26,7 @@ import java.io.UnsupportedEncodingException;
 public class MainActivity extends ActionBarActivity {
 
     private Toolbar toolbar;
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,15 @@ public class MainActivity extends ActionBarActivity {
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
+
+        button = (Button) findViewById(R.id.button_test);
+
+        button.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+               new Relax().execute();
+
+            }
+        });
     }
 
     @Override
@@ -59,17 +71,22 @@ public class MainActivity extends ActionBarActivity {
     private class Relax extends AsyncTask<JSONObject, String, String> {
         protected String doInBackground(JSONObject... obj) {
             HttpClient client = new DefaultHttpClient();
-            HttpPost post = new HttpPost("https://bigbrother-backend.herokuapp.com");
+            HttpPost post = new HttpPost("https://bigbrother-backend.herokuapp.com:443/api/people");
             post.addHeader(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+            Person p = new Person("Tony", "Hwuang", 4, 1996);
+
             try {
-                post.setEntity(new StringEntity(obj.toString()));
+                post.setEntity(new StringEntity(p.toJSON().toString()));
             } catch (UnsupportedEncodingException e) {
             }
+
 
             // send request
             try {
                 HttpResponse response = client.execute(post);
                 if (response.getStatusLine().getStatusCode() == 200) {
+
                     return ":)";
                 } else {
                     return ":(";
