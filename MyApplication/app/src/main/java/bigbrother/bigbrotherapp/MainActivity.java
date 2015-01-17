@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -27,6 +28,14 @@ public class MainActivity extends ActionBarActivity {
 
     private Toolbar toolbar;
     private Button button;
+    private EditText name;
+    private EditText frequency;
+    private EditText pin;
+    private EditText pin_check;
+    private Button submit_button;
+
+    public String [] ReturnArray = new String[3];
+
     private Pinger pinger;
 
     @Override
@@ -41,6 +50,11 @@ public class MainActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);
 
         button = (Button) findViewById(R.id.button_test);
+        submit_button = (Button) findViewById(R.id.btnLogin);
+        pin = (EditText) findViewById(R.id.pin_text);
+        pin_check = (EditText) findViewById(R.id.pin_check_text);
+        name = (EditText) findViewById(R.id.name_text);
+        frequency = (EditText) findViewById(R.id.frequeny_text);
 
         button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -48,6 +62,31 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
+
+        submit_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(pin.length() != 4){
+                    pin.setError("Pin should be 4 numbers");
+                    pin.requestFocus();
+                    if (pin.getText() != pin_check.getText()){
+                        pin_check.setError("Pin does not match");
+                        pin.requestFocus();
+                        pin_check.requestFocus();
+                    }
+                }else{
+                        ReturnArray[0] = name.getText().toString();
+                        ReturnArray[1] = frequency.getText().toString();
+                        ReturnArray[2] = pin.getText().toString();
+                    System.out.println(ReturnArray[0]);
+                    System.out.println(ReturnArray[1]);
+                    System.out.println(ReturnArray[2]);
+                    }
+                }
+
+        });
+
+
     }
 
     @Override
