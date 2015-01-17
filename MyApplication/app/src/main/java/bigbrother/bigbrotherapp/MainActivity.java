@@ -1,6 +1,7 @@
 package bigbrother.bigbrotherapp;
 
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -43,6 +44,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         // create pinger
         pinger = new Pinger(1, 3453564);
 
@@ -69,11 +71,12 @@ public class MainActivity extends ActionBarActivity {
                 if(pin.length() != 4){
                     pin.setError("Pin should be 4 numbers");
                     pin.requestFocus();
-                    if (pin.getText() != pin_check.getText()){
-                        pin_check.setError("Pin does not match");
-                        pin.requestFocus();
-                        pin_check.requestFocus();
-                    }
+
+                }
+                else if (pin.getText() != pin_check.getText()){
+                    pin_check.setError("Pin does not match");
+                    pin.requestFocus();
+                    pin_check.requestFocus();
                 }else{
                         ReturnArray[0] = name.getText().toString();
                         ReturnArray[1] = frequency.getText().toString();
