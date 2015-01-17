@@ -21,19 +21,26 @@
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
             android:text="Name (First Last)"
-            android:layout_marginTop="5dip"/>
+            android:layout_marginTop="5dip"
+            android:layout_gravity="center_horizontal"
+            />
 
         <EditText android:layout_width="fill_parent"
             android:id="@+id/name_text"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dip"
             android:layout_marginBottom="20dip"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            />
 
         <TextView android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
-            android:text="Frequency(minutes)"/>
+            android:text="Frequency(minutes)"
+            android:layout_gravity="center_horizontal"/>
 
         <EditText android:layout_width="fill_parent"
             android:id="@+id/frequeny_text"
@@ -41,12 +48,16 @@
             android:layout_marginTop="5dip"
             android:layout_marginBottom="20dip"
             android:singleLine="true"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"/>
 
         <TextView android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
             android:text="Pin"
+            android:layout_gravity="center_horizontal"
         />
 
         <EditText android:layout_width="fill_parent"
@@ -57,11 +68,16 @@
             android:password="true"
             android:inputType="number"
             android:id="@+id/pin_text"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             />
+
         <TextView android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
-            android:text="Pin Check"/>
+            android:text="Pin Check"
+            android:layout_gravity="center_horizontal"/>
 
         <EditText android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -71,6 +87,9 @@
             android:password="true"
             android:inputType="number"
             android:id="@+id/pin_check_text"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             />
         <!-- Login button -->
         <Button android:id="@+id/btnLogin"
