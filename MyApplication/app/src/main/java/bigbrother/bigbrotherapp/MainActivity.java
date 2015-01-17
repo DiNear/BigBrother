@@ -1,9 +1,23 @@
 package bigbrother.bigbrotherapp;
 
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
+import org.json.JSONObject;
+
+import java.io.IOError;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -35,5 +49,34 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class Relax extends AsyncTask<JSONObject, String, String> {
+        protected String doInBackground(JSONObject... obj) {
+            HttpClient client = new DefaultHttpClient();
+            HttpPost post = new HttpPost("https://bigbrother-backend.herokuapp.com");
+            post.addHeader(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+            try {
+                post.setEntity(new StringEntity(obj.toString()));
+            } catch (UnsupportedEncodingException e) {
+            }
+
+            // send request
+            try {
+                HttpResponse response = client.execute(post);
+                if (response.getStatusLine().getStatusCode() == 200) {
+                    return ":)";
+                } else {
+                    return ":(";
+                }
+            } catch (IOException e) {
+            }
+
+            return ":(";
+        }
+
+        protected void onPostExecute() {
+
+        }
     }
 }
