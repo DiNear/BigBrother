@@ -27,11 +27,15 @@ public class MainActivity extends ActionBarActivity {
 
     private Toolbar toolbar;
     private Button button;
+    private Pinger pinger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // create pinger
+        pinger = new Pinger(1, 3453564);
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
@@ -40,7 +44,7 @@ public class MainActivity extends ActionBarActivity {
 
         button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-               new Relax().execute();
+               new Relax().execute(pinger.getPing());
 
             }
         });
@@ -68,23 +72,13 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class Relax extends AsyncTask<JSONObject, String, String> {
-        protected String doInBackground(JSONObject... obj) {
+    private class Relax extends AsyncTask<HttpPost, String, String> {
+        protected String doInBackground(HttpPost... obj) {
             HttpClient client = new DefaultHttpClient();
-            HttpPost post = new HttpPost("https://bigbrother-backend.herokuapp.com:443/api/people");
-            post.addHeader(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-
-            Person p = new Person("Tony", "Hwuang", 4, 1996);
-
-            try {
-                post.setEntity(new StringEntity(p.toJSON().toString()));
-            } catch (UnsupportedEncodingException e) {
-            }
-
 
             // send request
             try {
-                HttpResponse response = client.execute(post);
+                HttpResponse response = client.execute(obj[0]);
                 if (response.getStatusLine().getStatusCode() == 200) {
 
                     return ":)";

@@ -42,7 +42,7 @@ public class Pinger {
             obj.put("status", 0);
 
             // create HTTP POST object
-            HttpPost post = new HttpPost("https://bigbrother-backend.herokuapp.com");
+            HttpPost post = new HttpPost("https://bigbrother-backend.herokuapp.com:443/api/pings");
             post.addHeader(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
             post.setEntity(new StringEntity(obj.toString()));
