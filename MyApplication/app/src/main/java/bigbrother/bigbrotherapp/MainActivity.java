@@ -35,7 +35,7 @@ public class MainActivity extends ActionBarActivity {
     private EditText pin_check;
     private Button submit_button;
 
-    public String [] ReturnArray = new String[3];
+    private Person person;
 
     private Pinger pinger;
 
@@ -56,7 +56,7 @@ public class MainActivity extends ActionBarActivity {
         pin = (EditText) findViewById(R.id.pin_text);
         pin_check = (EditText) findViewById(R.id.pin_check_text);
         name = (EditText) findViewById(R.id.name_text);
-        frequency = (EditText) findViewById(R.id.frequeny_text);
+        frequency = (EditText) findViewById(R.id.frequency_text);
 
         button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -68,26 +68,25 @@ public class MainActivity extends ActionBarActivity {
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(pin.length() != 4){
+                if(pin.length() != 4) {
                     pin.setError("Pin should be 4 numbers");
                     pin.requestFocus();
-
                 }
-                else if (pin.getText() != pin_check.getText()){
-                    pin_check.setError("Pin does not match");
-                    pin.requestFocus();
-                    pin_check.requestFocus();
+                else if (pin.getText() != pin_check.getText() && false){
+                        pin_check.setError("Pin does not match");
+                        pin.requestFocus();
+                        pin_check.requestFocus();
                 }else{
-                        ReturnArray[0] = name.getText().toString();
-                        ReturnArray[1] = frequency.getText().toString();
-                        ReturnArray[2] = pin.getText().toString();
-                    System.out.println(ReturnArray[0]);
-                    System.out.println(ReturnArray[1]);
-                    System.out.println(ReturnArray[2]);
-                    }
-                }
+                    String[] flname = name.getText().toString().split(" ", 2);
+                    person = new Person(flname[0], flname[1], 5, Integer.parseInt(pin.getText().toString()));
 
-        });
+                    person.sendToServer();
+
+                    System.out.println(person.toJSON().toString());
+                 }
+
+
+        }});
 
 
     }

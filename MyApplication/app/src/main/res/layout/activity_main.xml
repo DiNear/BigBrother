@@ -17,72 +17,110 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/app_bar">
         <!--  Name Label -->
-        <TextView android:layout_width="fill_parent"
+
+        <EditText android:layout_width="wrap_content"
+            android:id="@+id/name_text"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:layout_marginBottom="2dip"
+            android:singleLine="true"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="130dip"
+            android:paddingRight="130dip"
+            />
+
+        <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
             android:text="Name (First Last)"
-            android:layout_marginTop="5dip"/>
-
-        <EditText android:layout_width="fill_parent"
-            android:id="@+id/name_text"
-            android:layout_height="wrap_content"
             android:layout_marginTop="5dip"
-            android:layout_marginBottom="20dip"
-            android:singleLine="true"/>
+            android:layout_marginBottom="5dip"
+            android:layout_gravity="center_horizontal"
+            android:textSize="15dp"
+            />
 
-        <TextView android:layout_width="fill_parent"
+        <EditText android:layout_width="wrap_content"
+            android:id="@+id/frequency_text"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dip"
+            android:layout_marginBottom="2dip"
+            android:singleLine="true"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="130dip"
+            android:paddingRight="130dip"
+            />
+
+        <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
-            android:text="Frequency(minutes)"/>
-
-        <EditText android:layout_width="fill_parent"
-            android:id="@+id/frequeny_text"
-            android:layout_height="wrap_content"
+            android:text="Frequency(minutes)"
             android:layout_marginTop="5dip"
-            android:layout_marginBottom="20dip"
-            android:singleLine="true"
-            android:inputType="number"/>
+            android:layout_marginBottom="5dip"
+            android:layout_gravity="center_horizontal"
+            android:textSize="15dp"
+            />
 
-        <TextView android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:text="Pin"
-        />
-
-        <EditText android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
-            android:layout_marginBottom="20dip"
-            android:singleLine="true"
+        <EditText android:layout_width="wrap_content"
             android:password="true"
             android:inputType="number"
             android:id="@+id/pin_text"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dip"
+            android:layout_marginBottom="2dip"
+            android:singleLine="true"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="130dip"
+            android:paddingRight="130dip"
             />
-        <TextView android:layout_width="fill_parent"
+
+        <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
-            android:text="Pin Check"/>
-
-        <EditText android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:text="Pin"
             android:layout_marginTop="5dip"
-            android:layout_marginBottom="20dip"
-            android:singleLine="true"
+            android:layout_marginBottom="5dip"
+            android:layout_gravity="center_horizontal"
+            android:textSize="15dp"
+            />
+
+        <EditText android:layout_width="wrap_content"
             android:password="true"
             android:inputType="number"
             android:id="@+id/pin_check_text"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dip"
+            android:layout_marginBottom="2dip"
+            android:singleLine="true"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="130dip"
+            android:paddingRight="130dip"
             />
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:text="Pin Check"
+            android:layout_marginTop="5dip"
+            android:layout_marginBottom="5dip"
+            android:layout_gravity="center_horizontal"
+            android:textSize="15dp"
+            />
+
         <!-- Login button -->
         <Button android:id="@+id/btnLogin"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            android:text="Create Info"/>
+            android:layout_marginTop="25dp"
+            android:layout_gravity="center_horizontal"
+            android:width="270dp"
+            android:text="Create Info"
+            />
 
     </LinearLayout>
 
     <Button
         android:layout_below="@+id/form_layout"
+        android:layout_marginTop="20dp"
         android:id="@+id/button_test"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
