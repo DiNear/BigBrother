@@ -48,7 +48,7 @@ public class MainActivity extends ActionBarActivity {
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
-         
+
         button = (Button) findViewById(R.id.button_test);
         submit_button = (Button) findViewById(R.id.btnLogin);
         pin = (EditText) findViewById(R.id.pin_text);
