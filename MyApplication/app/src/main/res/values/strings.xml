@@ -6,5 +6,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="next">Next</string>
+    <string name="title_activity_entry_pin2">entry_pin2</string>
 
 </resources>
