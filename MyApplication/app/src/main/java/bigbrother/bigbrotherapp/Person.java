@@ -1,8 +1,16 @@
 package bigbrother.bigbrotherapp;
 
 
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.sql.Timestamp;
+import java.util.Date;
 
 public class Person {
     private String firstname;
@@ -79,5 +87,27 @@ public class Person {
         }
 
         return obj;
+    }
+
+    public void sendToServer() {
+        try {
+            // create JSON object
+            JSONObject obj = this.toJSON();
+
+            // create HTTP POST object
+            HttpPost post = new HttpPost("https://bigbrother-backend.herokuapp.com:443/api/people");
+            post.addHeader(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+            post.setEntity(new StringEntity(obj.toString()));
+
+            new Relax().execute(post);
+        } catch (UnsupportedEncodingException e) {
+            System.err.println("UnsupportedEncodingException in Person.sendToServer");
+        }
+    }
+
+    public void setId(int id) {
+        // from callback
+        this.id = id;
     }
 }

@@ -34,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
     private EditText pin_check;
     private Button submit_button;
 
-    public String [] ReturnArray = new String[3];
+    private Person person;
 
     private Pinger pinger;
 
@@ -74,13 +74,13 @@ public class MainActivity extends ActionBarActivity {
                         pin.requestFocus();
                         pin_check.requestFocus();
                     }
-                }else{
-                        ReturnArray[0] = name.getText().toString();
-                        ReturnArray[1] = frequency.getText().toString();
-                        ReturnArray[2] = pin.getText().toString();
-                    System.out.println(ReturnArray[0]);
-                    System.out.println(ReturnArray[1]);
-                    System.out.println(ReturnArray[2]);
+                }else {
+                    String[] flname = name.getText().toString().split(" ", 2);
+                    person = new Person(flname[0], flname[1], 5, Integer.parseInt(pin.getText().toString()));
+
+                    HttpPost post = new HttpPost();
+
+                    System.out.println(person.toJSON().toString());
                     }
                 }
 
