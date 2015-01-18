@@ -100,7 +100,7 @@ public class Person {
 
             post.setEntity(new StringEntity(obj.toString()));
 
-            new Relax().execute(post);
+            new Relax(this).execute(post);
         } catch (UnsupportedEncodingException e) {
             System.err.println("UnsupportedEncodingException in Person.sendToServer");
         }

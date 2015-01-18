@@ -58,6 +58,7 @@ public class Relax extends AsyncTask<HttpPost, String, JSONObject> {
 
             if (this.caller != null) {
                 ((Person) caller).setId(jobj.getInt("id"));
+                System.out.println(((Person) caller).getId());
             }
         } catch (JSONException e) {
         }
