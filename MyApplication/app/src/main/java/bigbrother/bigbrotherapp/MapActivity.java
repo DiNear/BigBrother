@@ -3,6 +3,8 @@ package bigbrother.bigbrotherapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -20,8 +23,13 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 
-public class MapActivity extends FragmentActivity implements LocationListener, OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener {
+
+public class MapActivity extends FragmentActivity implements LocationListener, GoogleMap.OnMapClickListener,
+                    OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener {
 
     public static int PIN_RESULT_ID = 9001;
     public static int CONFIRM_RESULT_ID = 9005;
@@ -31,6 +39,7 @@ public class MapActivity extends FragmentActivity implements LocationListener, O
     private GoogleMap map;
     private LocationRequest lr;
     private Button btnConfirmArrival;
+    private Location userLoc;
 
     private Pinger pinger;
 
@@ -63,41 +72,68 @@ public class MapActivity extends FragmentActivity implements LocationListener, O
                 startActivityForResult(intent, CONFIRM_RESULT_ID);
             }
         });
+
     }
 
     @Override
     public void onMapReady(GoogleMap map) {
         map.setMyLocationEnabled(true);
-        this.map = map;
+        map.setOnMapClickListener(this);
+
+        if(userLoc != null) {
+            LatLng ll_loc = new LatLng(userLoc.getLatitude(), userLoc.getLongitude());
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(ll_loc, 14));
+        }
+        
+        if(this.map == null) {
+            this.map = map;
+        }
+    }
+
+    @Override
+    public void onMapClick(LatLng point) {
+        map.animateCamera(CameraUpdateFactory.newLatLng(point));
+        map.clear();
+
+        map.addMarker(new MarkerOptions()
+                .position(point)
+                .title("Destination")
+                .snippet("Your Final Destination: ").draggable(true));
+
+        if(lr == null) {
+            // Set up the pinger
+            SharedPreferences prefs = getSharedPreferences("saved", MODE_PRIVATE);
+            int frequency = prefs.getInt("frequency", DEFAULT_FREQUENCY);
+
+            // Set up the location services
+            lr = new LocationRequest();
+            lr.setInterval(frequency * 1000);
+            lr.setFastestInterval(60 * 1000);
+            lr.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            LocationServices.FusedLocationApi.requestLocationUpdates(client, lr, this);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 
     @Override
     public void onConnected(Bundle connectionHint) {
         // Connected to Google Play services!
         // The good stuff goes here.
-        Location userLoc = LocationServices.FusedLocationApi.getLastLocation(client);
+
+        userLoc = LocationServices.FusedLocationApi.getLastLocation(client);
         LatLng ll_loc;
 
         if(userLoc != null) {
             ll_loc = new LatLng(userLoc.getLatitude(), userLoc.getLongitude());
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(ll_loc, 12));
-            map.addMarker(new MarkerOptions()
-                    .title("You")
-                    .snippet("You are here.")
-                    .position(ll_loc));
+            if(map != null) {
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(ll_loc, 14));
+            }
         }
 
-        // Set up the pinger
-        SharedPreferences prefs = getSharedPreferences("saved", MODE_PRIVATE);
-        int frequency = prefs.getInt("frequency", DEFAULT_FREQUENCY);
         pinger = Pinger.getInstance();
-
-        // Set up the location services
-        lr = new LocationRequest();
-        lr.setInterval(frequency * 1000);
-        lr.setFastestInterval(60 * 1000);
-        lr.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        LocationServices.FusedLocationApi.requestLocationUpdates(client, lr, this);
 
     }
 
@@ -120,6 +156,7 @@ public class MapActivity extends FragmentActivity implements LocationListener, O
     @Override
     public void onLocationChanged(Location location) {
         double lng = location.getLongitude(), lat = location.getLatitude();
+        userLoc = location;
 
         pinger.setLat(lat);
         pinger.setLong(lng);
@@ -129,7 +166,7 @@ public class MapActivity extends FragmentActivity implements LocationListener, O
         startActivityForResult(intent, PIN_RESULT_ID);
 
         LatLng new_loc = new LatLng(lat, lng);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new_loc, 13));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new_loc, 14));
     }
 
     @Override

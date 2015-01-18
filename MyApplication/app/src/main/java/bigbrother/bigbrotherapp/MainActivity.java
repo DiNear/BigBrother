@@ -80,6 +80,7 @@ public class MainActivity extends ActionBarActivity {
                     editor.putString("lastname", lname);
                     editor.putInt("frequency",Integer.parseInt(frequency.getText().toString())*60);
                     editor.putInt("pin",Integer.parseInt(pin.getText().toString()));
+                    editor.putInt("complete",0);
 
                     editor.commit();
 

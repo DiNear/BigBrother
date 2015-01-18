@@ -1,10 +1,12 @@
 package bigbrother.bigbrotherapp;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,14 +28,18 @@ public class EnterPinActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_enter_pin);
 
         enter_pin = (Button) findViewById(R.id.submit_btn2);
         message = (TextView) findViewById(R.id.enter_pin_msg);
         pin_check = (EditText) findViewById(R.id.pin_text_check);
 
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        // Vibrate for 500 milliseconds
+        v.vibrate(500);
+
         SharedPreferences prefs = getSharedPreferences("saved",MODE_PRIVATE);
+
         savedPin = prefs.getInt("pin", 0000);
         activeTime = prefs.getInt("frequency", 60);
 
@@ -51,6 +57,7 @@ public class EnterPinActivity extends ActionBarActivity {
 
             @Override
             public void onClick(View v) {
+
                 if (Integer.parseInt(pin_check.getText().toString()) == savedPin){
                     Intent in = getIntent();
                     Intent intent = new Intent();
@@ -71,6 +78,10 @@ public class EnterPinActivity extends ActionBarActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 
     public void closeActivityWithError() {
