@@ -8,7 +8,6 @@ import android.os.IBinder;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 /**
  * Created by Tony on 1/17/2015.
  */

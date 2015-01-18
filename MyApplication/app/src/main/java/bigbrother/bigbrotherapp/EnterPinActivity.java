@@ -19,7 +19,7 @@ public class EnterPinActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_enter_pin);
 
-        enter_pin = (Button) findViewById(R.id.submit_btn);
+        enter_pin = (Button) findViewById(R.id.submit_btn2);
 
         enter_pin.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){

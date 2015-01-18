@@ -28,7 +28,7 @@
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
-            android:text="PIN"
+            android:text="pin"
             android:layout_marginTop="5dip"
             android:layout_marginBottom="5dip"
             android:layout_gravity="center_horizontal"
@@ -36,12 +36,12 @@
             />
 
         <Button
-            android:layout_below="@+id/submit_btn"
             android:layout_marginTop="20dp"
-            android:id="@+id/submit_btn"
+            android:id="@+id/submit_btn2"
+            android:layout_gravity="center_horizontal"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="Enter PIN"
+            android:text="Enter Pin"
             />
 
     </LinearLayout>
