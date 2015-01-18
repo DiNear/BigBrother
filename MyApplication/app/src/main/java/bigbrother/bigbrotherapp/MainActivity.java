@@ -41,14 +41,15 @@ public class MainActivity extends ActionBarActivity {
         name = (EditText) findViewById(R.id.name_text);
         frequency = (EditText) findViewById(R.id.frequency_text);
 
+        final Activity mactivity = this;
+
         button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-               new Relax().execute(pinger.getPing());
 
+                Intent intent = new Intent(mactivity, MapActivity.class);
+                startActivity(intent);
             }
         });
-
-        final Activity mactivity = this;
 
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,9 +101,8 @@ public class MainActivity extends ActionBarActivity {
                     timer.start();
 
                  }
-
-
-        }});
+            }
+        });
     }
 
     @Override

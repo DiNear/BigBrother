@@ -8,5 +8,6 @@
     <string name="next">Next</string>
     <string name="title_activity_entry_pin2">entry_pin2</string>
     <string name="title_activity_enter_pin">EnterPin</string>
+    <string name="title_activity_map">MapActivity</string>
 
 </resources>
