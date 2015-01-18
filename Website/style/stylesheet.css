@@ -2,18 +2,6 @@ body.default{
 	background-color: #c6c6c6
 }
 
-#map {
-	position: relative;
-	cursor: pointer;
-	width: 650px;
-	height: 435px;
-	margin-top: 170px;
-	margin-left: auto;
-	margin-right: auto;
-	background-color: #ffffff;
-
-}
-
 #maps {
 	position: absolute;
 	cursor: pointer;
@@ -23,5 +11,4 @@ body.default{
 	margin-left: 12%;
 	margin-right: 15%;
 	background-color: #ffffff;
-
 }
