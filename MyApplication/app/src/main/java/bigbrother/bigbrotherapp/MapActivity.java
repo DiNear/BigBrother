@@ -1,5 +1,6 @@
 package bigbrother.bigbrotherapp;
 
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -9,16 +10,20 @@ import android.view.MenuItem;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.*;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 
 
-public class MapActivity extends ActionBarActivity implements OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener {
+public class MapActivity extends ActionBarActivity implements LocationListener, OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener {
+
+    private static int DEFAULT_FREQUENCY = 5;
 
     private GoogleApiClient client;
-    private Location userLoc;
     private GoogleMap map;
+    private LocationRequest lr;
 
     private Pinger pinger;
 
@@ -28,9 +33,17 @@ public class MapActivity extends ActionBarActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_map);
 
         // Create a GoogleApiClient instance
-         client = new GoogleApiClient.Builder(this)
-                .addApi(LocationServices.API)
-                .build();
+        client = new GoogleApiClient.Builder(this)
+               .addApi(LocationServices.API)
+               .build();
+
+        SharedPreferences prefs = getSharedPreferences("saved", MODE_PRIVATE);
+        int frequency = prefs.getInt("frequency", DEFAULT_FREQUENCY);
+
+        lr = new LocationRequest();
+        lr.setInterval(frequency * 1000);
+        lr.setFastestInterval(1000);
+        lr.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
@@ -42,7 +55,7 @@ public class MapActivity extends ActionBarActivity implements OnMapReadyCallback
         map.setMyLocationEnabled(true);
         this.map = map;
 
-        userLoc = LocationServices.FusedLocationApi.getLastLocation(client);
+        Location userLoc = LocationServices.FusedLocationApi.getLastLocation(client);
         LatLng ll_loc;
 
         System.out.println("WORKING: " + (userLoc != null));
@@ -61,8 +74,7 @@ public class MapActivity extends ActionBarActivity implements OnMapReadyCallback
     public void onConnected(Bundle connectionHint) {
         // Connected to Google Play services!
         // The good stuff goes here.
-        userLoc = LocationServices.FusedLocationApi.getLastLocation(client);
-        LatLng ll_loc;
+        LocationServices.FusedLocationApi.requestLocationUpdates(client, lr, this);
 
     }
 
@@ -80,6 +92,19 @@ public class MapActivity extends ActionBarActivity implements OnMapReadyCallback
         //
         // More about this in the next section.
         //...
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        double lng = location.getLongitude(), lat = location.getLatitude();
+
+        pinger.setLat(lat);
+        pinger.setLong(lng);
+        new Relax().execute(pinger.getPing());
+
+        LatLng new_loc = new LatLng(lat, lng);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new_loc, 13));
+        System.out.println("WORKING: " + lat + " " + lng);
     }
 
     @Override
