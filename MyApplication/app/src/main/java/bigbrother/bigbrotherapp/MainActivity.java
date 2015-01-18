@@ -19,7 +19,6 @@ import android.content.Context;
 public class MainActivity extends ActionBarActivity {
 
     private Toolbar toolbar;
-    private Button button;
     private EditText name;
     private EditText frequency;
     private EditText pin;
@@ -30,29 +29,11 @@ public class MainActivity extends ActionBarActivity {
 
     private Pinger pinger;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        try {
-//            FileInputStream fileIn = new FileInputStream("/tmp/person.ser");
-//            ObjectInputStream in = new ObjectInputStream(fileIn);
-//            person = (Person) in.readObject();
-//
-//        }catch(FileNotFoundException ex) {
-//        }
-//        catch(IOException i){
-//            i.printStackTrace();
-//            return;
-//        }
-//        catch(ClassNotFoundException c) {
-//            System.out.println("Person class not found");
-//            c.printStackTrace();
-//        }
-
-        button = (Button) findViewById(R.id.button_test);
         submit_button = (Button) findViewById(R.id.btnLogin);
         pin = (EditText) findViewById(R.id.pin_text);
         pin_check = (EditText) findViewById(R.id.pin_check_text);
@@ -61,16 +42,7 @@ public class MainActivity extends ActionBarActivity {
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
-
         final Activity mactivity = this;
-
-        button.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-
-                Intent intent = new Intent(mactivity, MapActivity.class);
-                startActivity(intent);
-            }
-        });
 
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,22 +90,8 @@ public class MainActivity extends ActionBarActivity {
                     // check-in with server
                     person.sendToServer();
 
-//                    // start new thread
-//                    Thread timer = new Thread() {
-//                        public void run() {
-//                            for (;;) {
-//                                try {
-//                                    Thread.sleep(person.getCheck_freq() * 1000);
-//                                    Intent intent = new Intent(mactivity, EnterPinActivity.class);
-//                                    System.out.println("Intent?");
-//                                    startActivity(intent);
-//                                } catch (InterruptedException e) {
-//                                }
-//                            }
-//                        }
-//                    };
-//                    timer.start();
-
+                    Intent intent = new Intent(mactivity, MapActivity.class);
+                    startActivity(intent);
                  }
             }
         });

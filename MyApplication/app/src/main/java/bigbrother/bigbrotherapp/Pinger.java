@@ -18,6 +18,7 @@ public class Pinger {
     public static int STATUS_OK = 0;
     public static int STATUS_DANGER = 1;
     public static int STATUS_WARNING = 2;
+    public static int STATUS_ARRIVED = 3;
 
     private static Pinger instance;
     private Person person;

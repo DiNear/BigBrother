@@ -52,9 +52,16 @@ public class EnterPinActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (Integer.parseInt(pin_check.getText().toString()) == savedPin){
+                    Intent in = getIntent();
                     Intent intent = new Intent();
-                    intent.putExtra("result", Pinger.STATUS_OK);
-                    setResult(MapActivity.PIN_RESULT_ID, intent);
+
+                    if(in.getBooleanExtra("confirm_arrival", false)) {
+                        intent.putExtra("result", Pinger.STATUS_ARRIVED);
+                        setResult(MapActivity.CONFIRM_RESULT_ID, intent);
+                    } else {
+                        intent.putExtra("result", Pinger.STATUS_OK);
+                        setResult(MapActivity.PIN_RESULT_ID, intent);
+                    }
                     finish();
                 } else {
                     message.setText("Incorrect Pin, please try again");
