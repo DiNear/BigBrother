@@ -16,6 +16,8 @@ import java.util.Random;
 public class Pinger {
     private Person person;
     private String timestamp;
+    double longitude;
+    double latitude;
     private int token;
     private int status;
 
@@ -43,6 +45,8 @@ public class Pinger {
             obj.put("uid", this.person.getId());
             obj.put("timestamp", new Timestamp(d.getTime()).toString());
             obj.put("token", this.person.getToken());
+            obj.put("longitude", this.longitude);
+            obj.put("latitude", this.latitude);
             obj.put("status", 0);
 
             // create HTTP POST object
@@ -59,5 +63,13 @@ public class Pinger {
             System.err.println("UnsupportedEncodingException in Pinger");
             return null;
         }
+    }
+
+    public void setLong(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setLat(double latitude) {
+        this.latitude = latitude;
     }
 }
