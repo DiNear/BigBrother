@@ -14,6 +14,12 @@ import java.util.Date;
 import java.util.Random;
 
 public class Pinger {
+
+    public static int STATUS_OK = 0;
+    public static int STATUS_DANGER = 1;
+    public static int STATUS_WARNING = 2;
+
+    private static Pinger instance;
     private Person person;
     private String timestamp;
     double longitude;
@@ -21,12 +27,21 @@ public class Pinger {
     private int token;
     private int status;
 
-    Pinger(Person person) {
-        this.person = person;
+    private Pinger() {
+        this.status = Pinger.STATUS_OK;
 
         // generate token
         Random r = new Random();
         this.token = r.nextInt();
+    }
+
+    public void setPerson(Person person) { this.person = person; }
+
+    public static synchronized Pinger getInstance(){
+        if(instance == null){
+            instance = new Pinger();
+        }
+        return instance;
     }
 
     public int getId() {
@@ -47,7 +62,7 @@ public class Pinger {
             obj.put("token", this.person.getToken());
             obj.put("longitude", this.longitude);
             obj.put("latitude", this.latitude);
-            obj.put("status", 0);
+            obj.put("status", this.status);
 
             // create HTTP POST object
             HttpPost post = new HttpPost("https://bigbrother-backend.herokuapp.com:443/api/pings");
@@ -63,6 +78,10 @@ public class Pinger {
             System.err.println("UnsupportedEncodingException in Pinger");
             return null;
         }
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public void setLong(double longitude) {
