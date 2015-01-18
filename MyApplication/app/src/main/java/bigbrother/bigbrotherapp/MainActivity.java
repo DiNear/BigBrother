@@ -44,10 +44,6 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        // create pinger
-        pinger = new Pinger(1, 3453564);
-
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
@@ -78,8 +74,24 @@ public class MainActivity extends ActionBarActivity {
                         pin_check.requestFocus();
                 }else{
                     String[] flname = name.getText().toString().split(" ", 2);
-                    person = new Person(flname[0], flname[1], 5, Integer.parseInt(pin.getText().toString()));
+                    String fname, lname;
 
+                    if (flname.length == 2) {
+                        fname = flname[0];
+                        lname = flname[1];
+                    } else {
+                        fname = flname[0];
+                        lname = "";
+                    }
+
+                    person = new Person(fname,
+                            lname,
+                            Integer.parseInt(frequency.getText().toString()),
+                            Integer.parseInt(pin.getText().toString()));
+                    // create pinger
+                    pinger = new Pinger(person);
+
+                    // check-in with server
                     person.sendToServer();
                  }
 

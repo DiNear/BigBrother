@@ -9,8 +9,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.sql.Timestamp;
-import java.util.Date;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 
 public class Person {
     private String firstname;
@@ -25,10 +25,11 @@ public class Person {
         this.firstname = firstname;
         this.lastname = lastname;
         this.last_check = "";
-        this.token = "";
+        this.token = genToken();
         this.check_freq = check_freq;
         this.pin = pin;
         this.id = 0;
+
     }
 
     Person(JSONObject obj) {
@@ -106,8 +107,18 @@ public class Person {
         }
     }
 
+    public String getToken() {
+        return token;
+    }
+
     public void setId(int id) {
         // from callback
         this.id = id;
+    }
+
+    // token generator
+    public static String genToken() {
+        SecureRandom random = new SecureRandom();
+        return new BigInteger(130, random).toString(32);
     }
 }

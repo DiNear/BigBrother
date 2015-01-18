@@ -11,20 +11,24 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Random;
 
 public class Pinger {
-    private int id;
+    private Person person;
     private String timestamp;
     private int token;
     private int status;
 
-    Pinger(int id, int token) {
-        this.id = id;
-        this.token = token;
+    Pinger(Person person) {
+        this.person = person;
+
+        // generate token
+        Random r = new Random();
+        this.token = r.nextInt();
     }
 
     public int getId() {
-        return this.id;
+        return this.person.getId();
     }
 
     public int getStatus() {
@@ -36,9 +40,9 @@ public class Pinger {
             // create JSON object
             JSONObject obj = new JSONObject();
             Date d = new Date();
-            obj.put("uid", id);
+            obj.put("uid", this.person.getId());
             obj.put("timestamp", new Timestamp(d.getTime()).toString());
-            obj.put("token", token);
+            obj.put("token", this.person.getToken());
             obj.put("status", 0);
 
             // create HTTP POST object
