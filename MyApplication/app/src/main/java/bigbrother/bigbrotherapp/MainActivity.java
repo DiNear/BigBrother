@@ -90,11 +90,14 @@ public class MainActivity extends ActionBarActivity {
                                 try {
                                     Thread.sleep(person.getCheck_freq() * 1000);
                                     Intent intent = new Intent(mactivity, EnterPinActivity.class);
+                                    System.out.println("Intent?");
+                                    startActivity(intent);
                                 } catch (InterruptedException e) {
                                 }
                             }
                         }
                     };
+                    timer.start();
 
                  }
 
