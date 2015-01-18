@@ -1,7 +1,7 @@
 package bigbrother.bigbrotherapp;
 
-import android.os.AsyncTask;
-import android.os.CountDownTimer;
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,19 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.protocol.HTTP;
-import org.json.JSONObject;
-
-import java.io.IOError;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -61,6 +48,8 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        final Activity mactivity = this;
+
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,19 +75,31 @@ public class MainActivity extends ActionBarActivity {
 
                     person = new Person(fname,
                             lname,
-                            Integer.parseInt(frequency.getText().toString()),
+                            Integer.parseInt(frequency.getText().toString()) * 60,
                             Integer.parseInt(pin.getText().toString()));
                     // create pinger
                     pinger = new Pinger(person);
 
                     // check-in with server
                     person.sendToServer();
+
+                    // start new thread
+                    Thread timer = new Thread() {
+                        public void run() {
+                            for (;;) {
+                                try {
+                                    Thread.sleep(person.getCheck_freq() * 1000);
+                                    Intent intent = new Intent(mactivity, EnterPinActivity.class);
+                                } catch (InterruptedException e) {
+                                }
+                            }
+                        }
+                    };
+
                  }
 
 
         }});
-
-
     }
 
     @Override

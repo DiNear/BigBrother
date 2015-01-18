@@ -28,11 +28,20 @@
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
-            android:text="password"
+            android:text="PIN"
             android:layout_marginTop="5dip"
             android:layout_marginBottom="5dip"
             android:layout_gravity="center_horizontal"
             android:textSize="20dp"
+            />
+
+        <Button
+            android:layout_below="@+id/submit_btn"
+            android:layout_marginTop="20dp"
+            android:id="@+id/button_test"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Enter PIN"
             />
 
     </LinearLayout>
