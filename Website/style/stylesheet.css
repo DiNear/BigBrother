@@ -1,0 +1,14 @@
+body.default{
+	background-color: #c6c6c6
+}
+
+#maps {
+	position: absolute;
+	cursor: pointer;
+	width: 75%;
+	height: 60%;
+	margin-top: 170px;
+	margin-left: 12%;
+	margin-right: 15%;
+	background-color: #ffffff;
+}
