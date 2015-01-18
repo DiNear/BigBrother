@@ -1,5 +1,6 @@
 package bigbrother.bigbrotherapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
@@ -19,7 +20,8 @@ import com.google.android.gms.maps.model.*;
 
 public class MapActivity extends FragmentActivity implements LocationListener, OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener {
 
-    private static int DEFAULT_FREQUENCY = 5;
+    public static int PIN_RESULT_ID = 9001;
+    private static int DEFAULT_FREQUENCY = 120;
 
     private GoogleApiClient client;
     private GoogleMap map;
@@ -39,15 +41,6 @@ public class MapActivity extends FragmentActivity implements LocationListener, O
                .addOnConnectionFailedListener(this)
                .build();
         client.connect();
-
-        SharedPreferences prefs = getSharedPreferences("saved", MODE_PRIVATE);
-        int frequency = prefs.getInt("frequency", DEFAULT_FREQUENCY);
-        pinger = Pinger.getInstance();
-
-        lr = new LocationRequest();
-        lr.setInterval(frequency * 1000);
-        lr.setFastestInterval(1000);
-        lr.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
@@ -76,6 +69,14 @@ public class MapActivity extends FragmentActivity implements LocationListener, O
                     .position(ll_loc));
         }
 
+        SharedPreferences prefs = getSharedPreferences("saved", MODE_PRIVATE);
+        int frequency = prefs.getInt("frequency", DEFAULT_FREQUENCY);
+        pinger = Pinger.getInstance();
+
+        lr = new LocationRequest();
+        lr.setInterval(frequency * 1000);
+        lr.setFastestInterval(60 * 1000);
+        lr.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         LocationServices.FusedLocationApi.requestLocationUpdates(client, lr, this);
 
     }
@@ -104,8 +105,25 @@ public class MapActivity extends FragmentActivity implements LocationListener, O
         pinger.setLong(lng);
         new Relax().execute(pinger.getPing());
 
+        Intent intent = new Intent(this, EnterPinActivity.class);
+        System.out.println("Intent?");
+        startActivityForResult(intent, PIN_RESULT_ID);
+
         LatLng new_loc = new LatLng(lat, lng);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new_loc, 13));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == PIN_RESULT_ID){
+            int result = (int) data.getExtras().get("result");
+            if(result == Pinger.STATUS_DANGER || result == Pinger.STATUS_OK || result == Pinger.STATUS_WARNING) {
+                pinger.setStatus(result);
+            }
+        }
+
     }
 
     @Override

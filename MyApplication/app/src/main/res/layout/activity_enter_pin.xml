@@ -23,12 +23,14 @@
             android:layout_gravity="center_horizontal"
             android:paddingLeft="130dip"
             android:paddingRight="130dip"
+            android:password="true"
             />
 
         <TextView android:layout_width="wrap_content"
+            android:id="@+id/enter_pin_msg"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
-            android:text="pin"
+            android:text="Enter Pin"
             android:layout_marginTop="5dip"
             android:layout_marginBottom="5dip"
             android:layout_gravity="center_horizontal"

@@ -118,21 +118,21 @@ public class MainActivity extends ActionBarActivity {
                     // check-in with server
                     person.sendToServer();
 
-                    // start new thread
-                    Thread timer = new Thread() {
-                        public void run() {
-                            for (;;) {
-                                try {
-                                    Thread.sleep(person.getCheck_freq() * 1000);
-                                    Intent intent = new Intent(mactivity, EnterPinActivity.class);
-                                    System.out.println("Intent?");
-                                    startActivity(intent);
-                                } catch (InterruptedException e) {
-                                }
-                            }
-                        }
-                    };
-                    timer.start();
+//                    // start new thread
+//                    Thread timer = new Thread() {
+//                        public void run() {
+//                            for (;;) {
+//                                try {
+//                                    Thread.sleep(person.getCheck_freq() * 1000);
+//                                    Intent intent = new Intent(mactivity, EnterPinActivity.class);
+//                                    System.out.println("Intent?");
+//                                    startActivity(intent);
+//                                } catch (InterruptedException e) {
+//                                }
+//                            }
+//                        }
+//                    };
+//                    timer.start();
 
                  }
             }
