@@ -21,9 +21,10 @@ public class EnterPinActivity extends ActionBarActivity {
 
         enter_pin = (Button) findViewById(R.id.submit_btn);
 
-        enter_pin.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                System.out.println(enter_pin.getText().toString());
+        enter_pin.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                System.out.println("fasdf");
+
             }
         });
     }
