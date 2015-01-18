@@ -29,12 +29,18 @@ public class EnterPinActivity extends ActionBarActivity {
         SharedPreferences prefs = getSharedPreferences("saved",MODE_PRIVATE);
         test = prefs.getInt("pin",0000);
         System.out.println(test);
+        SharedPreferences.Editor editor = prefs.edit();
+
         enter_pin.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
                 if (Integer.parseInt(pin_check.getText().toString()) == test){
-                    System.out.println("lol");
+                    SharedPreferences prefs = getSharedPreferences("saved",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putInt("complete",1);
+                    System.out.println("lel");
+                    editor.commit();
                 }
             }
         });

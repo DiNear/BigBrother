@@ -36,21 +36,6 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        try {
-//            FileInputStream fileIn = new FileInputStream("/tmp/person.ser");
-//            ObjectInputStream in = new ObjectInputStream(fileIn);
-//            person = (Person) in.readObject();
-//
-//        }catch(FileNotFoundException ex) {
-//        }
-//        catch(IOException i){
-//            i.printStackTrace();
-//            return;
-//        }
-//        catch(ClassNotFoundException c) {
-//            System.out.println("Person class not found");
-//            c.printStackTrace();
-//        }
 
         button = (Button) findViewById(R.id.button_test);
         submit_button = (Button) findViewById(R.id.btnLogin);
@@ -108,6 +93,7 @@ public class MainActivity extends ActionBarActivity {
                     editor.putString("lastname", lname);
                     editor.putInt("frequency",Integer.parseInt(frequency.getText().toString())*60);
                     editor.putInt("pin",Integer.parseInt(pin.getText().toString()));
+                    editor.putInt("complete",0);
 
                     editor.commit();
 
@@ -122,10 +108,17 @@ public class MainActivity extends ActionBarActivity {
                         public void run() {
                             for (;;) {
                                 try {
+
                                     Thread.sleep(person.getCheck_freq() * 1000);
                                     Intent intent = new Intent(mactivity, EnterPinActivity.class);
                                     System.out.println("Intent?");
                                     startActivity(intent);
+                                    SharedPreferences prefs = getSharedPreferences("saved",MODE_PRIVATE);
+                                    int checker = prefs.getInt("complete",0);
+                                    if (checker == 1){
+                                        System.out.println("magic");
+                                        break;
+                                    }
                                 } catch (InterruptedException e) {
                                 }
                             }
