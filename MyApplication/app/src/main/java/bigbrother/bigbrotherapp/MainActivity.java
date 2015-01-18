@@ -111,7 +111,8 @@ public class MainActivity extends ActionBarActivity {
 
                     editor.commit();
 
-                    pinger = new Pinger(person);
+                    pinger = Pinger.getInstance();
+                    pinger.setPerson(person);
 
 
                     // check-in with server

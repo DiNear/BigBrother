@@ -14,6 +14,9 @@ import java.util.Date;
 import java.util.Random;
 
 public class Pinger {
+
+    private static Pinger instance;
+
     private Person person;
     private String timestamp;
     double longitude;
@@ -21,12 +24,19 @@ public class Pinger {
     private int token;
     private int status;
 
-    Pinger(Person person) {
-        this.person = person;
-
+    private Pinger() {
         // generate token
         Random r = new Random();
         this.token = r.nextInt();
+    }
+
+    public void setPerson(Person person) { this.person = person; }
+
+    public static synchronized Pinger getInstance(){
+        if(instance == null){
+            instance = new Pinger();
+        }
+        return instance;
     }
 
     public int getId() {
