@@ -19,10 +19,10 @@
             android:layout_marginTop="200dip"
             android:layout_marginBottom="2dip"
             android:singleLine="true"
-            android:textColor="#43ff23"
             android:layout_gravity="center_horizontal"
             android:paddingLeft="130dip"
             android:paddingRight="130dip"
+            android:inputType="number"
             android:password="true"
             />
 

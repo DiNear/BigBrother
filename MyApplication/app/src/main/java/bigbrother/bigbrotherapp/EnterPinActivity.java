@@ -34,6 +34,7 @@ public class EnterPinActivity extends ActionBarActivity {
         pin_check = (EditText) findViewById(R.id.pin_text_check);
 
         SharedPreferences prefs = getSharedPreferences("saved",MODE_PRIVATE);
+
         savedPin = prefs.getInt("pin", 0000);
         activeTime = prefs.getInt("frequency", 60);
 
@@ -51,6 +52,7 @@ public class EnterPinActivity extends ActionBarActivity {
 
             @Override
             public void onClick(View v) {
+
                 if (Integer.parseInt(pin_check.getText().toString()) == savedPin){
                     Intent intent = new Intent();
                     intent.putExtra("result", Pinger.STATUS_OK);
