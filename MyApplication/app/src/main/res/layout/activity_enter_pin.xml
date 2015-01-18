@@ -22,6 +22,7 @@
             android:layout_gravity="center_horizontal"
             android:paddingLeft="130dip"
             android:paddingRight="130dip"
+            android:inputType="number"
             android:password="true"
             />
 
