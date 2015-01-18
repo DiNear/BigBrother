@@ -72,7 +72,7 @@ public class MainActivity extends ActionBarActivity {
                     pin.setError("Pin should be 4 numbers");
                     pin.requestFocus();
                 }
-                else if (pin.getText() != pin_check.getText() && false){
+                else if (!pin.getText().toString().equals(pin_check.getText().toString())){
                         pin_check.setError("Pin does not match");
                         pin.requestFocus();
                         pin_check.requestFocus();
