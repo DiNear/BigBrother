@@ -17,13 +17,13 @@ import java.io.IOException;
 public class Relax extends AsyncTask<HttpPost, String, JSONObject> {
 
     // manage callback
-    Object caller;
+    Person caller;
 
     Relax() {
         this.caller = null;
     }
 
-    Relax(Object caller) {
+    Relax(Person caller) {
         this.caller = caller;
     }
 
@@ -50,15 +50,16 @@ public class Relax extends AsyncTask<HttpPost, String, JSONObject> {
         return null;
     }
 
-    protected void onPostExecute(String result) {
-        System.out.println(result);
+    protected void onPostExecute(JSONObject jobj) {
+        System.out.println(jobj.toString());
 
         try {
-            JSONObject jobj = new JSONObject(result);
 
             if (this.caller != null) {
-                ((Person) caller).setId(jobj.getInt("id"));
-                System.out.println(((Person) caller).getId());
+                caller.setId(jobj.getInt("id"));
+                System.out.println(caller.getId());
+            } else {
+                System.out.println("no caller");
             }
         } catch (JSONException e) {
         }

@@ -81,8 +81,6 @@ public class MainActivity extends ActionBarActivity {
                     person = new Person(flname[0], flname[1], 5, Integer.parseInt(pin.getText().toString()));
 
                     person.sendToServer();
-
-                    System.out.println(person.toJSON().toString());
                  }
 
 
